@@ -1,0 +1,6 @@
+# config/routes.yaml
+weather_in_city:
+    path: /weather/{city}
+    controller: App\Controller\WeatherController:cityAction
+    requirements:
+        city: \w+

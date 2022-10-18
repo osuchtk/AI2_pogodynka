@@ -1,0 +1,127 @@
+<?php
+
+namespace App\Entity;
+
+use App\Repository\MeasuresRepository;
+use Doctrine\DBAL\Types\Types;
+use Doctrine\ORM\Mapping as ORM;
+
+#[ORM\Entity(repositoryClass: MeasuresRepository::class)]
+class Measures
+{
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
+    private ?int $id = null;
+
+    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Localisation $localisation = null;
+
+    #[ORM\Column(type: Types::DECIMAL, precision: 3, scale: '0')]
+    private ?string $Temperature = null;
+
+    #[ORM\Column(type: Types::DECIMAL, precision: 3, scale: '0')]
+    private ?string $WindSpeed = null;
+
+    #[ORM\Column(length: 10)]
+    private ?string $WindDirection = null;
+
+    #[ORM\Column]
+    private ?int $Humidity = null;
+
+    #[ORM\Column]
+    private ?int $PrecipationProbality = null;
+
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    private ?\DateTimeInterface $Date = null;
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getLocalisation(): ?Localisation
+    {
+        return $this->localisation;
+    }
+
+    public function setLocalisation(Localisation $localisation): self
+    {
+        $this->localisation = $localisation;
+
+        return $this;
+    }
+
+    public function getTemperature(): ?string
+    {
+        return $this->Temperature;
+    }
+
+    public function setTemperature(string $Temperature): self
+    {
+        $this->Temperature = $Temperature;
+
+        return $this;
+    }
+
+    public function getWindSpeed(): ?string
+    {
+        return $this->WindSpeed;
+    }
+
+    public function setWindSpeed(string $WindSpeed): self
+    {
+        $this->WindSpeed = $WindSpeed;
+
+        return $this;
+    }
+
+    public function getWindDirection(): ?string
+    {
+        return $this->WindDirection;
+    }
+
+    public function setWindDirection(string $WindDirection): self
+    {
+        $this->WindDirection = $WindDirection;
+
+        return $this;
+    }
+
+    public function getHumidity(): ?int
+    {
+        return $this->Humidity;
+    }
+
+    public function setHumidity(int $Humidity): self
+    {
+        $this->Humidity = $Humidity;
+
+        return $this;
+    }
+
+    public function getPrecipationProbality(): ?int
+    {
+        return $this->PrecipationProbality;
+    }
+
+    public function setPrecipationProbality(int $PrecipationProbality): self
+    {
+        $this->PrecipationProbality = $PrecipationProbality;
+
+        return $this;
+    }
+
+    public function getDate(): ?\DateTimeInterface
+    {
+        return $this->Date;
+    }
+
+    public function setDate(\DateTimeInterface $Date): self
+    {
+        $this->Date = $Date;
+
+        return $this;
+    }
+}

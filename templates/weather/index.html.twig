@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Weather in {{localisation.City}}, {{localisation.Countrycode}}{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+    <h1>{{localisation.City}}, {{localisation.CountryCode}}</h1>
+
+    <ul>
+		{% for measure in measures %}
+			<li>{{measure.date|date('d.m.Y') }}: {{measure.temperature}}&deg;C</li>
+		{% endfor %}
+    </ul>
+</div>
+
+{% endblock %}

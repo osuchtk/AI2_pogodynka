@@ -1,0 +1,24 @@
+<?php // src/Controller/WeatherController.php
+
+namespace App\Controller;
+
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+use App\Entity\Localisation;
+use App\Entity\Measures;
+use App\Repository\LocalisationRepository;
+use App\Repository\MeasuresRepository;
+
+class WeatherController extends AbstractController
+{
+    public function cityAction(Localisation $city, MeasuresRepository $measuresRepository, LocalisationRepository $localisationRepository): Response
+    {
+		$measures = $measuresRepository->findByLocation($city);
+		
+        return $this->render('weather/index.html.twig', [
+            'localisation' => $city,
+			'measures' => $measures,
+        ]);
+    }
+}

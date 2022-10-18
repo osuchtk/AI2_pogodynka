@@ -1,0 +1,34 @@
+<?php
+
+namespace App\Repository;
+
+use App\Entity\Measures;
+use App\Entity\Localisation;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Persistence\ManagerRegistry;
+
+
+class MeasuresRepository extends ServiceEntityRepository
+{
+    public function __construct(ManagerRegistry $registry)
+    {
+        parent::__construct($registry, Measures::class);
+    }
+
+    public function findByLocation(Localisation $
+	localisationId, LocalisationRepository $localisationRepository)
+	{
+		$localisation = $localisationRepository->find($localisationId);
+		
+		$qb = $this->createQueryBuilder('m');
+		$qb->where('m.localisation = :localisation')
+			->setParameter('localisation', $localisation)
+			->andWhere('m.Date > :now')
+			->setParameter('now', date('Y-m-d'));
+			
+		$query = $qb->getQuery();
+		$result = $query->getResult();
+		
+		return $result;
+	}
+}
