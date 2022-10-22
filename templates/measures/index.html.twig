@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Measures index{% endblock %}
+
+{% block body %}
+    <h1>Measures index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Temperature</th>
+                <th>WindSpeed</th>
+                <th>WindDirection</th>
+                <th>Humidity</th>
+                <th>PrecipationProbality</th>
+                <th>Date</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for measure in measures %}
+            <tr>
+                <td>{{ measure.id }}</td>
+                <td>{{ measure.Temperature }}</td>
+                <td>{{ measure.WindSpeed }}</td>
+                <td>{{ measure.WindDirection }}</td>
+                <td>{{ measure.Humidity }}</td>
+                <td>{{ measure.PrecipationProbality }}</td>
+                <td>{{ measure.Date ? measure.Date|date('Y-m-d') : '' }}</td>
+                <td>
+                    <a href="{{ path('app_measures_show', {'id': measure.id}) }}">show</a>
+                    <a href="{{ path('app_measures_edit', {'id': measure.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_measures_new') }}">Create new</a>
+    <a href="{{ path('app_localisation_index') }}">Localisations</a>
+{% endblock %}

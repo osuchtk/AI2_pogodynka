@@ -14,7 +14,7 @@ class Measures
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(cascade: ['persist', 'remove'])]
+    #[ORM\ManyToOne()]
     #[ORM\JoinColumn(nullable: false)]
     private ?Localisation $localisation = null;
 

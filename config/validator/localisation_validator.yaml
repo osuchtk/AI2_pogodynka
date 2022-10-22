@@ -1,0 +1,15 @@
+App\Entity\Localisation:
+  properties:
+    City:
+      - NotBlank:
+          groups: ['edit', 'new']
+    Latitude:
+      - Range:
+          min: -90
+          max: 90
+          groups: ['edit', 'new']
+    Longtitude:
+      - Range:
+          min: -180
+          max: 180
+          groups: ['edit', 'new']

@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Measures{% endblock %}
+
+{% block body %}
+    <h1>Measures</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ measure.id }}</td>
+            </tr>
+            <tr>
+                <th>Temperature</th>
+                <td>{{ measure.Temperature }}</td>
+            </tr>
+            <tr>
+                <th>WindSpeed</th>
+                <td>{{ measure.WindSpeed }}</td>
+            </tr>
+            <tr>
+                <th>WindDirection</th>
+                <td>{{ measure.WindDirection }}</td>
+            </tr>
+            <tr>
+                <th>Humidity</th>
+                <td>{{ measure.Humidity }}</td>
+            </tr>
+            <tr>
+                <th>PrecipationProbality</th>
+                <td>{{ measure.PrecipationProbality }}</td>
+            </tr>
+            <tr>
+                <th>Date</th>
+                <td>{{ measure.Date ? measure.Date|date('Y-m-d') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_measures_index') }}">back to list</a>
+
+    <a href="{{ path('app_measures_edit', {'id': measure.id}) }}">edit</a>
+
+    {{ include('measures/_delete_form.html.twig') }}
+{% endblock %}

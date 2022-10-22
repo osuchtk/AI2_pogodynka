@@ -1,0 +1,16 @@
+App\Entity\Measures:
+  properties:
+    WindSpeed:
+      - Range:
+          min: 0
+          groups: ['edit', 'new']
+    Humidity:
+      - Range:
+          min: 0
+          max: 100
+          groups: ['edit', 'new']
+    PrecipationProbality:
+      - Range:
+          min: 0
+          max: 100
+          groups: ['edit', 'new']
