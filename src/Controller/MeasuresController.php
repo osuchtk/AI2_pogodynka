@@ -11,11 +11,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 #[Route('/measures')]
 class MeasuresController extends AbstractController
 {
     #[Route('/', name: 'app_measures_index', methods: ['GET'])]
+    #[IsGranted('ROLE_MEASURES_INDEX')]
     public function index(MeasuresRepository $measuresRepository): Response
     {
         return $this->render('measures/index.html.twig', [
@@ -24,6 +26,7 @@ class MeasuresController extends AbstractController
     }
 
     #[Route('/new', name: 'app_measures_new', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_MEASURES_NEW')]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $measure = new Measures();
@@ -49,6 +52,7 @@ class MeasuresController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_measures_show', methods: ['GET'])]
+    #[IsGranted('ROLE_MEASURES_SHOW')]
     public function show(Measures $measure): Response
     {
         return $this->render('measures/show.html.twig', [
@@ -57,6 +61,7 @@ class MeasuresController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_measures_edit', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_MEASURES_EDIT')]
     public function edit(Request $request, Measures $measure, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(MeasuresType::class, $measure, [
@@ -80,6 +85,7 @@ class MeasuresController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_measures_delete', methods: ['POST'])]
+    #[IsGranted('ROLE_MEASURES_DELETE')]
     public function delete(Request $request, Measures $measure, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$measure->getId(), $request->request->get('_token'))) {

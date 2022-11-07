@@ -29,8 +29,13 @@
                 <td>{{ measure.PrecipationProbality }}</td>
                 <td>{{ measure.Date ? measure.Date|date('Y-m-d') : '' }}</td>
                 <td>
-                    <a href="{{ path('app_measures_show', {'id': measure.id}) }}">show</a>
-                    <a href="{{ path('app_measures_edit', {'id': measure.id}) }}">edit</a>
+                    {% if is_granted('ROLE_MEASURES_SHOW') %}
+                        <a href="{{ path('app_measures_show', {'id': measure.id}) }}">show</a>
+                    {% endif %}
+
+                    {% if is_granted('ROLE_MEASURES_EDIT') %}                    
+                        <a href="{{ path('app_measures_edit', {'id': measure.id}) }}">edit</a>
+                    {% endif %}
                 </td>
             </tr>
         {% else %}
@@ -41,6 +46,14 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_measures_new') }}">Create new</a>
-    <a href="{{ path('app_localisation_index') }}">Localisations</a>
+    {% if is_granted('ROLE_MEASURES_NEW') %}
+        <a href="{{ path('app_measures_new') }}">Create new</a>
+    {% endif %}
+
+    {% if is_granted('ROLE_MEASURES_INDEX') %}
+        <a href="{{ path('app_localisation_index') }}">Localisations</a>
+    {% endif %}
+
+    <a href="{{ path('app_logout') }}">Logout</a>
+
 {% endblock %}

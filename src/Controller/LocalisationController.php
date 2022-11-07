@@ -10,11 +10,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 #[Route('/localisation')]
 class LocalisationController extends AbstractController
 {
     #[Route('/', name: 'app_localisation_index', methods: ['GET'])]
+    #[IsGranted('ROLE_LOCALISATION_INDEX')]
     public function index(LocalisationRepository $localisationRepository): Response
     {
         return $this->render('localisation/index.html.twig', [
@@ -23,6 +25,7 @@ class LocalisationController extends AbstractController
     }
 
     #[Route('/new', name: 'app_localisation_new', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_LOCALISATION_NEW')]
     public function new(Request $request, LocalisationRepository $localisationRepository): Response
     {
         $localisation = new Localisation();
@@ -47,6 +50,7 @@ class LocalisationController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_localisation_show', methods: ['GET'])]
+    #[IsGranted('ROLE_LOCALISATION_SHOW')]
     public function show(Localisation $localisation): Response
     {
         return $this->render('localisation/show.html.twig', [
@@ -55,6 +59,7 @@ class LocalisationController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_localisation_edit', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_LOCALISATION_EDIT')]
     public function edit(Request $request, Localisation $localisation, LocalisationRepository $localisationRepository): Response
     {
         $form = $this->createForm(LocalisationType::class, $localisation, [
@@ -78,6 +83,7 @@ class LocalisationController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_localisation_delete', methods: ['POST'])]
+    #[IsGranted('ROLE_LOCALISATION_DELETE')]
     public function delete(Request $request, Localisation $localisation, LocalisationRepository $localisationRepository): Response
     {
         if ($this->isCsrfTokenValid('delete'.$localisation->getId(), $request->request->get('_token'))) {

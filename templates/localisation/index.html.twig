@@ -25,8 +25,13 @@
                 <td>{{ localisation.Latitude }}</td>
                 <td>{{ localisation.Longtitude }}</td>
                 <td>
-                    <a href="{{ path('app_localisation_show', {'id': localisation.id}) }}">show</a>
-                    <a href="{{ path('app_localisation_edit', {'id': localisation.id}) }}">edit</a>
+                    {% if is_granted('ROLE_LOCALISATION_SHOW') %}
+                        <a href="{{ path('app_localisation_show', {'id': localisation.id}) }}">show</a>
+                    {% endif %}
+
+                    {% if is_granted('ROLE_LOCALISATION_EDIT') %}
+                        <a href="{{ path('app_localisation_edit', {'id': localisation.id}) }}">edit</a>
+                    {% endif %}
                 </td>
             </tr>
         {% else %}
@@ -36,7 +41,14 @@
         {% endfor %}
         </tbody>
     </table>
+    {% if is_granted('ROLE_LOCALISATION_NEW') %}
+        <a href="{{ path('app_localisation_new') }}">Create new</a>
+    {% endif %}
 
-    <a href="{{ path('app_localisation_new') }}">Create new</a>
-    <a href="{{ path('app_measures_index') }}">Measures</a>
+    {% if is_granted('ROLE_MEASURES_INDEX') %}
+        <a href="{{ path('app_measures_index') }}">Measures</a>
+    {% endif %}
+
+    <a href="{{ path('app_logout') }}">Logout</a>
+
 {% endblock %}
