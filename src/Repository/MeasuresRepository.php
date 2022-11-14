@@ -11,25 +11,20 @@ use App\Repository\LocalisationRepository;
 
 class MeasuresRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+	private LocalisationRepository $localisationRepository;
+    public function __construct(ManagerRegistry $registry, LocalisationRepository $localisationRepository)
     {
         parent::__construct($registry, Measures::class);
+		$this->localisationRepository = $localisationRepository;
     }
 
-    public function findByLocation(Localisation $localisationId, LocalisationRepository $localisationRepository)
+    public function findByLocation(Localisation $localisation)
 	{
-		$localisation = $localisationRepository->find($localisationId);
+		$localisationFound = $this->localisationRepository->find($localisation);
 		
 		$qb = $this->createQueryBuilder('m');
 		$qb->where('m.localisation = :localisation')
-			->setParameter('localisation', $localisation);
-		
-		//$qb = $this->createQueryBuilder('m');
-		//$qb->join('m.localisation', 'l', 'WITH', 'l.id = m.localisation')
-		//->andWhere('l.city = :city')
-		//->setParameter('city', $city)
-		//->andWhere('l.country = :countryCode')
-		//->setParameter('countryCode', $countryCode);
+			->setParameter('localisation', $localisationFound);
 
 		$query = $qb->getQuery();
 		$result = $query->getResult();
